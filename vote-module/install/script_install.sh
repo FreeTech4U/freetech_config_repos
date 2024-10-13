@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Changer de répertoire
 cd /mnt || { echo "Directory /mnt does not exist"; exit 1; }
 
@@ -26,7 +25,7 @@ EOF
 
 # Se connecter à Docker Hub ou à un registre Docker privé
 echo "Logging into Docker..."
-docker login -u DOCKER_USERNAME -p DOCKER_PASSWORD
+docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 if [ $? -ne 0 ]; then
   echo "Docker login failed. Exiting..."
   exit 1
@@ -34,7 +33,7 @@ fi
 
 # Télécharger le fichier docker-compose.yml depuis GitHub
 echo "Downloading docker-compose.yml from GitHub..."
-wget -q --show-progress https://raw.githubusercontent.com/FreeTech4U/freetech_config_repos/refs/heads/main/vote-module/docker/docker-compose.yml -O docker-compose.yml
+wget -q --show-progress https://raw.githubusercontent.com/FreeTech4U/freetech_config_repos/refs/heads/main/vote-module/docker/docker-compose.yml -O ./docker-compose.yml
 
 # Vérifier si le téléchargement a réussi
 if [ $? -eq 0 ]; then
@@ -46,4 +45,10 @@ fi
 
 # Exécuter Docker Compose avec le fichier .env
 echo "Starting Docker Compose with .env file..."
-sudo docker-compose --env-file .env -f /mnt/docker-compose.yml up 
+sudo docker-compose --env-file .env -f ./docker-compose.yml up -d
+if [ $? -eq 0 ]; then
+  echo "Docker Compose started successfully."
+else
+  echo "Failed to start Docker Compose. Exiting..."
+  exit 1
+fi
