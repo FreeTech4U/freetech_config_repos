@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 # Changer de répertoire
 cd /mnt || { echo "Directory /mnt does not exist"; exit 1; }
 
@@ -19,7 +20,17 @@ API_INTERNAL_PORT=8081
 API_IMAGE=vote-module-api
 IMAGE_TAG=prod
 API_CONTAINER_NAME=vote-module-api
+DOCKER_USERNAME=${DOCKER_USERNAME}
+DOCKER_PASSWORD=${DOCKER_PASSWORD}
 EOF
+
+# Se connecter à Docker Hub ou à un registre Docker privé
+echo "Logging into Docker..."
+docker login -u DOCKER_USERNAME -p DOCKER_PASSWORD
+if [ $? -ne 0 ]; then
+  echo "Docker login failed. Exiting..."
+  exit 1
+fi
 
 # Télécharger le fichier docker-compose.yml depuis GitHub
 echo "Downloading docker-compose.yml from GitHub..."
