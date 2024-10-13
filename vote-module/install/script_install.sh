@@ -6,6 +6,7 @@ cd /mnt || { echo "Directory /mnt does not exist"; exit 1; }
 # Créer un fichier .env pour Docker Compose avec les variables d'environnement
 echo "Creating .env file..."
 cat <<EOF > .env
+MYSQL_HOST=${MYSQL_HOST}
 DOCKER_NETWORK=${DOCKER_NETWORK}
 MYSQL_EXTERNAL_PORT=${MYSQL_EXTERNAL_PORT}
 MYSQL_INTERNAL_PORT=${MYSQL_INTERNAL_PORT}
