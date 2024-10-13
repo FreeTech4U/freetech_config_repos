@@ -35,4 +35,4 @@ fi
 
 # Exécuter Docker Compose avec le fichier .env
 echo "Starting Docker Compose with .env file..."
-sudo docker-compose --env-file .env -f /mnt/docker-compose.yml up -d
+sudo docker-compose --env-file .env -f /mnt/docker-compose.yml up 
