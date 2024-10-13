@@ -70,7 +70,3 @@ services:
 networks:
   vote-module-net:
     driver: bridge
-
-volumes:
-  grafana-storage:
-    driver: local
