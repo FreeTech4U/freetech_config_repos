@@ -8,7 +8,7 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
-      - "${MYSQL_EXTERNAL_PORT}:${MYSQL_INTERNAL_PORT}"
+      - "3306:3306"
     networks:
       - ${DOCKER_NETWORK}
     volumes:
@@ -23,7 +23,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_PORT: ${MYSQL_EXTERNAL_PORT}
     ports:
-      - "${API_EXTERNAL_PORT}:${API_INTERNAL_PORT}"
+      - "8081:8081"
     networks:
       - ${DOCKER_NETWORK}
     volumes:
