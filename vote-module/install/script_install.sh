@@ -3,6 +3,15 @@
 # Changer de répertoire
 cd /mnt || { echo "Directory /mnt does not exist"; exit 1; }
 
+# Liste des services définis dans docker-compose.yml (à mettre à jour si nécessaire)
+services=("vote-module-api" "mysqldb" "promtail" "grafana" "loki")  # Ajoutez vos services ici
+
+# Vérifier si le fichier docker-compose.yml existe et le supprimer
+if [ -f "./docker-compose.yml" ]; then
+  echo "docker-compose.yml exists. Deleting it..."
+  rm -f ./docker-compose.yml
+fi
+
 # Créer un fichier .env pour Docker Compose avec les variables d'environnement
 echo "Creating .env file..."
 cat <<EOF > .env
@@ -31,15 +40,22 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Vérifier si le conteneur vote-module-api existe et le forcer à s'arrêter et à être supprimé
-CONTAINER_NAME="vote-module-api"
-if [ "$(docker ps -a -q -f name=$CONTAINER_NAME)" ]; then
-  echo "Container $CONTAINER_NAME exists. Stopping and removing it..."
-  docker stop $CONTAINER_NAME || { echo "Failed to stop container $CONTAINER_NAME"; exit 1; }
-  docker rm $CONTAINER_NAME || { echo "Failed to remove container $CONTAINER_NAME"; exit 1; }
-else
-  echo "Container $CONTAINER_NAME does not exist, continuing..."
-fi
+# Boucle sur chaque service de la liste
+for service in "${services[@]}"; do
+  echo "Checking container: $service"
+  
+  # Vérifier si le conteneur existe et est en cours d'exécution, puis le stopper et le supprimer
+  if [ "$(docker ps -q -f name=$service)" ]; then
+    echo "Container $service is running. Stopping and removing it..."
+    docker stop $service || { echo "Failed to stop container $service"; exit 1; }
+    docker rm $service || { echo "Failed to remove container $service"; exit 1; }
+  elif [ "$(docker ps -a -q -f name=$service)" ]; then
+    echo "Container $service exists but is not running. Removing it..."
+    docker rm $service || { echo "Failed to remove container $service"; exit 1; }
+  else
+    echo "Container $service does not exist, proceeding..."
+  fi
+done
 
 # Télécharger le fichier docker-compose.yml depuis GitHub
 echo "Downloading docker-compose.yml from GitHub..."
@@ -53,7 +69,7 @@ else
   exit 1
 fi
 
-# Exécuter Docker Compose avec le fichier .env et redémarrer le conteneur
+# Exécuter Docker Compose avec le fichier .env pour démarrer les services
 echo "Starting Docker Compose with .env file..."
 sudo docker-compose --env-file .env -f ./docker-compose.yml up -d
 if [ $? -eq 0 ]; then
