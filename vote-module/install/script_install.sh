@@ -5,7 +5,7 @@ cd /mnt || { echo "Directory /mnt does not exist"; exit 1; }
 
 # Télécharger le fichier docker-compose.yml depuis GitHub
 echo "Downloading docker-compose.yml from GitHub..."
-wget -q --show-progress https://raw.githubusercontent.com/Jean741/ms-config-repo/main/docker/docker-compose.yml -O docker-compose.yml
+wget -q --show-progress https://raw.githubusercontent.com/FreeTech4U/freetech_config_repos/refs/heads/main/vote-module/docker/docker-compose.yml -O docker-compose.yml
 
 # Vérifier si le téléchargement a réussi
 if [ $? -eq 0 ]; then
