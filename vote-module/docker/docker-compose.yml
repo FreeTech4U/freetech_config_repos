@@ -16,7 +16,7 @@ services:
     restart: always
 
   api:
-    image: ${API_IMAGE}:${IMAGE_TAG}
+    image: freetech4u/vote-module-api:prod
     container_name: ${API_CONTAINER_NAME}
     environment:
       MYSQL_HOST: ${MYSQL_HOST}
