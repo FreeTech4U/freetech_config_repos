@@ -61,7 +61,7 @@ services:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin  # Set your Grafana admin password here
     volumes:
-      - grafana-storage:/var/lib/grafana
+      - /mnt/grafana-storage:/var/lib/grafana
     networks:
       - vote-module-net
     depends_on:
