@@ -12,7 +12,7 @@ services:
     networks:
       - vote-module-net
     volumes:
-      - ${VOLUME_USER}:${VOLUME_MYSQL}
+      - /mnt/vote-module-data:/var/lib/mysql
     restart: always
 
   api:
