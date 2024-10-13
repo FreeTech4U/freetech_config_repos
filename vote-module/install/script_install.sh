@@ -45,7 +45,7 @@ fi
 
 # Exécuter Docker Compose avec le fichier .env
 echo "Starting Docker Compose with .env file..."
-sudo docker-compose --env-file .env -f ./docker-compose.yml up -d
+sudo docker-compose --env-file .env -f ./docker-compose.yml up
 if [ $? -eq 0 ]; then
   echo "Docker Compose started successfully."
 else
