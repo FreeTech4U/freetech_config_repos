@@ -19,9 +19,9 @@ services:
     image: freetech4u/vote-module-api:prod
     container_name: vote-module-api
     environment:
-      MYSQL_HOST: ${MYSQL_HOST}
-      MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_PORT: ${MYSQL_EXTERNAL_PORT}
+      MYSQL_HOST: mysqldb
+      MYSQL_PASSWORD: aV2lTubodbb589Motu
+      MYSQL_PORT: 3306
     ports:
       - "8081:8081"
     networks:
