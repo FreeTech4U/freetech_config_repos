@@ -32,9 +32,14 @@ DOCKER_USERNAME=${DOCKER_USERNAME}
 DOCKER_PASSWORD=${DOCKER_PASSWORD}
 EOF
 
+# Afficher le contenu du fichier .env pour vérification
+echo "Here is the content of the .env file:"
+cat .env
+
 # Se connecter à Docker Hub ou à un registre Docker privé
 echo "Logging into Docker..."
-docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
 if [ $? -ne 0 ]; then
   echo "Docker login failed. Exiting..."
   exit 1
