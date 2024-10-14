@@ -32,6 +32,13 @@ DOCKER_USERNAME=${DOCKER_USERNAME}
 DOCKER_PASSWORD=${DOCKER_PASSWORD}
 EOF
 
+echo MYSQL_HOST
+echo DOCKER_NETWORK
+echo API_IMAGE
+echo IMAGE_TAG
+echo API_CONTAINER_NAME
+echo VOLUME_USER
+
 # Se connecter à Docker Hub ou à un registre Docker privé
 echo "Logging into Docker..."
 docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
